@@ -4,14 +4,14 @@
 
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int arr1[NUM], arr2[NUM], arr3[NUM];
     int i;
 
     printf("Enter %d value in first arrary: ", NUM);
     for (i = 0; i < NUM; i++)
-        scanf("%d", &arr1[i]);  
-
+        scanf("%d", &arr1[i]);
     printf("Enter %d value in second array: ", NUM);
     for (i = 0; i < NUM; i++)
         scanf("%d", &arr2[i]);
