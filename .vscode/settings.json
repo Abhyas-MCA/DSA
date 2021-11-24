@@ -1,0 +1,5 @@
+{
+  "files.exclude": {
+    "**/a.exe": true
+  }
+}

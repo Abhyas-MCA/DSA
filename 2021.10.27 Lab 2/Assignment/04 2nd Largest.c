@@ -25,5 +25,5 @@ int main()
 
     sort(arr, NUM);
 
-    printf("2nd Largest elemtnt is: %d", arr[1]);
+    printf("2nd Largest element is: %d", arr[1]);
 }
