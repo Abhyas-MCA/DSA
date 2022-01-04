@@ -32,10 +32,11 @@ struct node *createDoublyLinkedList()
   return head;
 }
 
-struct node *insertBeginDoublyLinkedList(struct node *head, int value)
+struct node *insertBeginDoublyLinkedList(struct node *head)
 {
   struct node *newNode = malloc(sizeof(struct node)), *ptr = head;
-  newNode->data = value;
+  printf("Enter value for begin: ");
+  scanf("%d", &newNode->data);
   while (ptr->next != head)
     ptr = ptr->next;
   ptr->next = newNode;
@@ -45,10 +46,11 @@ struct node *insertBeginDoublyLinkedList(struct node *head, int value)
   return newNode;
 }
 
-struct node *insertEndDoublyLinkedList(struct node *head, int value)
+struct node *insertEndDoublyLinkedList(struct node *head)
 {
   struct node *newNode = malloc(sizeof(struct node)), *ptr = head;
-  newNode->data = value;
+  printf("Enter value for end: ");
+  scanf("%d", &newNode->data);
   while (ptr->next != head)
     ptr = ptr->next;
   ptr->next = newNode;
@@ -58,11 +60,13 @@ struct node *insertEndDoublyLinkedList(struct node *head, int value)
   return head;
 }
 
-void insertAtPositionDoublyLinkedList(struct node *head, int value, int position)
+void insertAtPositionDoublyLinkedList(struct node *head)
 {
+  int i, position;
   struct node *newNode = malloc(sizeof(struct node)), *ptr = head;
+  printf("Enter position and value: ");
+  scanf("%d %d", &position, &newNode->data);
   int i = 1;
-  newNode->data = value;
   while (i < position - 1)
   {
     ptr = ptr->next;
@@ -87,9 +91,9 @@ void printDoublyLinkedList(struct node *head)
 int main()
 {
   struct node *head = createDoublyLinkedList();
-  head = insertBeginDoublyLinkedList(head, 9);
-  head = insertEndDoublyLinkedList(head, 6);
-  insertAtPositionDoublyLinkedList(head, 6, 3);
+  head = insertBeginDoublyLinkedList(head);
+  head = insertEndDoublyLinkedList(head);
+  insertAtPositionDoublyLinkedList(head);
   printDoublyLinkedList(head);
   return 0;
 }
