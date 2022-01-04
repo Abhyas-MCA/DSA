@@ -88,12 +88,55 @@ void printDoublyLinkedList(struct node *head)
   } while (ptr != head);
 }
 
+struct node *deleteBeginDoublyLinkedList(struct node *head)
+{
+  struct node *ptr = head;
+  while (ptr->next != head)
+    ptr = ptr->next;
+  ptr->next = head->next;
+  head->next->prev = ptr;
+  free(head);
+  return ptr->next;
+}
+
+struct node *deleteEndDoublyLinkedList(struct node *head)
+{
+  struct node *ptr = head;
+  while (ptr->next != head)
+    ptr = ptr->next;
+  ptr->prev->next = head;
+  head->prev = ptr->prev;
+  free(ptr);
+  return head;
+} 
+
+struct node *deleteAtPositionDoublyLinkedList(struct node *head)
+{
+  int i, position;
+  struct node *ptr = head;
+  printf("Enter position: ");
+  scanf("%d", &position);
+  int i = 1;
+  while (i < position - 1)
+  {
+    ptr = ptr->next;
+    i++;
+  }
+  ptr->next = ptr->next->next;
+  ptr->next->prev = ptr;
+  free(ptr->next);
+  return head;
+} 
+
 int main()
 {
   struct node *head = createDoublyLinkedList();
   head = insertBeginDoublyLinkedList(head);
   head = insertEndDoublyLinkedList(head);
   insertAtPositionDoublyLinkedList(head);
+  head = deleteBeginDoublyLinkedList(head);
+  head = deleteEndDoublyLinkedList(head);
+  head = deleteAtPositionDoublyLinkedList(head);
   printDoublyLinkedList(head);
   return 0;
 }
