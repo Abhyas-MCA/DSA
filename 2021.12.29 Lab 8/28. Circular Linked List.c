@@ -5,9 +5,10 @@ struct node
 {
   int data;
   struct node *next;
+  struct node *prev;
 };
 
-struct node *createCircularLinkedList()
+struct node *createDoublyLinkedList()
 {
   int i, input;
   struct node *newNode, *head = NULL, *ptr;
@@ -24,46 +25,105 @@ struct node *createCircularLinkedList()
       while (ptr->next != head)
         ptr = ptr->next;
       ptr->next = newNode;
+      newNode->prev = ptr;
     }
     newNode->next = head;
   }
   return head;
 }
 
-struct node *insertBeginCircularLinkedList(struct node *head, int value)
+struct node *insertBeginDoublyLinkedList(struct node *head)
 {
   struct node *newNode = malloc(sizeof(struct node)), *ptr = head;
-  newNode->data = value;
+  printf("Enter value for begin: ");
+  scanf("%d", &newNode->data);
   while (ptr->next != head)
     ptr = ptr->next;
   ptr->next = newNode;
   newNode->next = head;
+  newNode->prev = ptr;
+  head->prev = newNode;
   return newNode;
 }
 
-struct node *insertEndCircularLinkedList(struct node *head, int value)
+struct node *insertEndDoublyLinkedList(struct node *head)
 {
   struct node *newNode = malloc(sizeof(struct node)), *ptr = head;
-  newNode->data = value;
+  printf("Enter value for end: ");
+  scanf("%d", &newNode->data);
   while (ptr->next != head)
     ptr = ptr->next;
   ptr->next = newNode;
   newNode->next = head;
+  newNode->prev = ptr;
+  head->prev = newNode;
   return head;
 }
 
-void insertAtPositionCircularLinkedList(struct node *head, int value, int position)
+struct node *insertAtPositionCircularLinkedList(struct node *head, int position)
 {
   struct node *newNode = malloc(sizeof(struct node)), *ptr = head;
-  int i = 1;
-  newNode->data = value;
+  int i, position;
+  printf("Enter value and position: ");
+  scanf("%d %d", &newNode->data, &position);
+  if (position == 1)
+  {
+    newNode->next = head;
+    newNode->prev = ptr;
+    head->prev = newNode;
+    head = newNode;
+  }
+  else
+  {
+    for (i = 1; i < position; i++)
+      ptr = ptr->next;
+    newNode->next = ptr->next;
+    newNode->prev = ptr;
+    ptr->next->prev = newNode;
+    ptr->next = newNode;
+  }
+  return head;
+}
+
+struct node *deleteBeginCircularLinkedList(struct node *head)
+{
+  printf("Deleting begin\n");
+  struct node *ptr = head;
+  while (ptr->next != head)
+    ptr = ptr->next;
+  ptr->next = head->next;
+  head->next->prev = ptr;
+  free(head);
+  return ptr->next;
+}
+
+struct node *deleteEndCircularLinkedList(struct node *head)
+{
+  printf("Deleting end\n");
+  struct node *ptr = head;
+  while (ptr->next != head)
+    ptr = ptr->next;
+  ptr->next = head->next;
+  head->next->prev = ptr;
+  free(head);
+  return ptr;
+}
+
+struct node *deleteAtPositionCircularLinkedList(struct node *head)
+{
+  struct node *ptr = head;
+  int i = 1, position;
+  printf("Enter position for delete: ");
+  scanf("%d", &position);
   while (i < position - 1)
   {
     ptr = ptr->next;
     i++;
   }
-  newNode->next = ptr->next;
-  ptr->next = newNode;
+  ptr->next = ptr->next->next;
+  ptr->next->next->prev = ptr;
+  free(ptr->next);
+  return head;
 }
 
 void printCircularLinkedList(struct node *head)
@@ -80,9 +140,9 @@ void printCircularLinkedList(struct node *head)
 int main()
 {
   struct node *head = createCircularLinkedList();
-  head = insertBeginCircularLinkedList(head, 11);
-  head = insertEndCircularLinkedList(head, 12);
-  insertAtPositionCircularLinkedList(head, 13, 3);
+  head = insertBeginCircularLinkedList(head);
+  head = insertEndCircularLinkedList(head);
+  head = insertAtPositionCircularLinkedList(head);
   printCircularLinkedList(head);
   return 0;
 }
